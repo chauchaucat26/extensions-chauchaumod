@@ -1,0 +1,25 @@
+{
+    "extensions": [
+        {
+            "slug": "CCcat/browser",
+            "id": "browser",
+            "name": "Browser Utilities",
+            "description": "Utilities for creating web apps Created by chauchaucat .",
+            "nameTranslations": {
+                "ja": "ブラウザー",
+                "ja-hira": "ブラウザー"
+            },
+            "descriptionTranslations": {
+                "ja": "ウェブアプリ作成用のユーティリティ",
+                "ja-hira": "アプリを作るのに便利なブロックです",
+            },
+            "image": "images/CCcat/browser.svg",
+            "by": [
+                {
+                    "name": "chauchaucat",
+                    "link": null
+                }
+            ]
+        }
+    ]
+}
