@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" href="https://scratch-mod.vercel.app/favicon.ico">
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title class="title">ChauchauMod Extension Gallery</title>
+    <meta name="theme-color" content="#ff4c4c">
+    <meta name="description" content="The official place to find powerful unsandboxed extensions for TurboWarp.">
+    <style>
+      :root {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color-scheme: light dark;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          color: #eee;
+          background: #111;
+        }
+        a {
+          color: #56b2ff;
+        }
+        a:visited {
+          color: #f192ff;
+        }
+        a:active {
+          color: red;
+        }
+        .invert-dark {
+          filter: invert(100%);
+        }
+      }
+
+      h1 {
+        margin: 16px 0;
+      }
+      h2, h3, p {
+        margin: 8px 0;
+      }
+
+      .section {
+        max-width: 928px;
+        margin: 24px auto;
+      }
+
+      .header h1 {
+        font-size: 2.5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: normal;
+        text-align: center;
+      }
+      .header svg {
+        width: 56px;
+        height: 56px;
+        flex-shrink: 0;
+        margin: 0 8px 0 0;
+      }
+      @media (max-width: 750px) {
+        .header h1 {
+          flex-direction: column;
+        }
+        .header svg {
+          margin: 0 0 8px 0;
+        }
+      }
+
+      .infobox, .development-tools {
+        padding: 8px;
+        margin: 8px 0;
+        border-radius: 8px;
+        background: rgba(0, 195, 255, 0.245);
+        border: 1px solid rgba(0, 187, 255, 0.604);
+      }
+      .infobox-warning {
+        background-color: rgba(255, 0, 0, 0.245);
+        border-color: rgba(255, 0, 0, 0.446);
+      }
+      .infobox-title {
+        font-weight: bold;
+        margin-bottom: 4px;
+      }
+
+      .development-tools {
+        background-color: rgba(200, 0, 255, 0.245);
+        border-color: rgba(234, 0, 255, 0.604);
+      }
+      .development-tools h2 {
+        font-size: 1em;
+      }
+
+      .extensions {
+        display: -ms-grid;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        margin: 16px -4px;
+      }
+      @media (max-width: 944px) {
+        .extensions {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 650px) {
+        .extensions {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .extension {
+        position: relative;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        margin: 4px;
+        overflow: hidden;
+        padding: 8px;
+      }
+      @media (prefers-color-scheme: dark) {
+        .extension {
+          border-color: #333;
+        }
+      }
+      .extension h3 {
+        font-size: 1.5em;
+      }
+      .extension > :last-child {
+        margin-bottom: 0;
+      }
+      .extension-banner {
+        position: relative;
+        margin: -8px -8px 0 -8px;
+      }
+      .extension-image {
+        display: block;
+        width: 100%;
+        /* TODO: see if there's another way to do this that works in older browsers too */
+        aspect-ratio: 2 / 1;
+      }
+
+      .extension-buttons {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        gap: 0.5rem;
+        opacity: 0;
+        transition: opacity .15s;
+        background: rgba(0, 0, 0, 0.5);
+        pointer-events: none;
+      }
+      .extension:hover .extension-buttons, .extension:focus-within .extension-buttons {
+        opacity: 1;
+        backdrop-filter: blur(0.6px);
+      }
+      .extension-buttons > * {
+        padding: 0.5rem;
+        background-color: #4c97ff;
+        border-radius: 0.5rem;
+        border: none;
+        font: inherit;
+        cursor: pointer;
+        color: white;
+        text-decoration: none;
+        pointer-events: auto;
+        transition: filter 0.15s;
+        filter: drop-shadow(0px 1px 3px #00000075);
+      }
+      .extension-buttons > *:hover {
+        filter: drop-shadow(0px 1px 7px black);
+        z-index: 1;
+      }
+      .extension-buttons *:active {
+        filter: brightness(0.85) drop-shadow(0px 1px 2px #00000075);
+      }
+      .extension-buttons *:disabled {
+        opacity: 0.5;
+      }
+      .extension-buttons .open {
+        background-color: #ff4c4c;
+        color: white;
+      }
+      .extension-buttons .docs {
+        background-color: #FFAB19;
+        color: white;
+      }
+      .extension-buttons .sample {
+        background-color: #40BF4A;
+        color: white;
+      }
+      .extension-buttons :disabled {
+        opacity: 0.5;
+      }
+
+      .sample-list {
+        display: none;
+        position: absolute;
+        left: 0.5rem;
+        right: 0.5rem;
+        width: calc(100% - 1rem);
+        margin-top: -1.5rem;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        background-color: white;
+        border-radius: 0.5rem;
+        box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, .3);
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .sample-list h3 {
+        font-size: 1rem;
+        margin: 0;
+      }
+      .extension:hover[data-samples-open="true"] .sample-list {
+        display: flex;
+      }
+      @media (prefers-color-scheme: dark) {
+        .sample-list {
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          background-color: #333;
+        }
+      }
+
+      footer {
+        opacity: 0.8;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 16px;
+      }
+      footer p {
+        margin: 0 0 8px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="section header">
+      <h1>
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="896" height="959.75197" viewBox="0,0,896,959.75197"><g transform="translate(-102,-70)"><g data-paper-data="{&quot;isPaintingLayer&quot;:true}" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" style="mix-blend-mode: normal"><path d="M164.85733,148.87755l767.99999,-13.71429c0.38086,-0.0068 0.76177,-0.0102 1.14268,-0.0102c35.34622,0 64,28.65378 64,64v654.84694c0,35.34622 -28.65378,64 -64,64h-113.30332c-9.32935,0 -18.19416,4.07135 -24.27337,11.14807l-67.26992,78.30776c-12.15844,14.15343 -29.88806,22.29614 -48.54676,22.29614h-261.21326c-18.6587,0 -36.38833,-8.14271 -48.54676,-22.29614l-67.26992,-78.30776c-6.07921,-7.07672 -14.94402,-11.14807 -24.27337,-11.14807h-113.30332c-35.34622,0 -64,-28.65378 -64,-64v-641.13265c0,-34.90078 27.96211,-63.36667 62.85733,-63.9898z" fill="#4c4c4c" fill-rule="evenodd" stroke="none" stroke-width="1"/><path d="M166,70h768c35.34622,0 64,28.65378 64,64v672c0,35.34622 -28.65378,64 -64,64h-128.17394c-9.97413,0 -19.37789,4.65076 -25.43169,12.5776l-51.18312,67.01917c-12.1076,15.85368 -30.9151,25.1552 -50.86336,25.1552h-256.69578c-19.94826,0 -38.75576,-9.30152 -50.86336,-25.1552l-51.18313,-67.01917c-6.05379,-7.92684 -15.45755,-12.5776 -25.43168,-12.5776h-128.17394c-35.34622,0 -64,-28.65378 -64,-64v-672c0,-35.34622 28.65378,-64 64,-64z" fill="#4c4c4c" fill-rule="evenodd" stroke="none" stroke-width="1"/><path d="M134,134v672c0,17.67311 14.32689,32 32,32h128.17394c19.94827,0 38.75577,9.30152 50.86337,25.1552l51.18312,67.01917c6.0538,7.92684 15.45755,12.5776 25.43168,12.5776h256.69578c9.97413,0 19.37788,-4.65076 25.43168,-12.5776l51.18312,-67.01917c12.1076,-15.85368 30.9151,-25.1552 50.86337,-25.1552h128.17394c17.67311,0 32,-14.32689 32,-32v-672c0,-17.67311 -14.32689,-32 -32,-32h-768c-17.67311,0 -32,14.32689 -32,32zM102,134c0,-35.34622 28.65378,-64 64,-64h768c35.34622,0 64,28.65378 64,64v672c0,35.34622 -28.65378,64 -64,64h-128.17394c-9.97413,0 -19.37789,4.65076 -25.43169,12.5776l-51.18312,67.01917c-12.1076,15.85368 -30.9151,25.1552 -50.86336,25.1552h-256.69578c-19.94826,0 -38.75576,-9.30152 -50.86336,-25.1552l-51.18313,-67.01917c-6.05379,-7.92684 -15.45755,-12.5776 -25.43168,-12.5776h-128.17394c-35.34622,0 -64,-28.65378 -64,-64z" fill-opacity="0.2" fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1"/><path d="M704.34898,472.78336c0.53796,23.24583 -0.55684,48.43589 -3.32218,75.54187c-4.4453,47.60535 -16.88461,82.18624 -37.3651,103.77098c-9.41914,9.96654 -31.82499,21.31103 -67.23642,34.03348c-15.50666,4.98327 -32.66497,7.47491 -51.47493,7.47491c-29.88076,0 -56.73191,-5.53067 -80.52514,-16.61091c-26.0206,-12.1656 -42.06523,-27.93653 -48.15275,-47.32221c-2.2085,-2.76534 -4.70957,-6.63493 -7.46547,-11.6182c-2.78422,-16.60147 -7.20121,-41.49895 -13.28872,-74.71132v-82.18623c0,-7.74861 1.93479,-24.35008 5.81382,-49.81385c3.86015,-25.44489 6.36122,-39.55472 7.47491,-42.3295c19.36681,-51.47494 40.67784,-79.69459 63.91423,-84.6873c10.50451,-2.19905 22.13215,-3.32218 34.86403,-3.32218c40.95155,0 78.04295,9.96654 111.24588,29.8902c2.19906,1.11368 4.97384,1.66109 8.29602,1.66109c0.55684,-1.66109 1.10424,-8.56972 1.67052,-20.7542c0.54741,0 0.54741,-9.67397 0,-29.05021c-0.56628,-13.28872 0.7456,-22.68899 3.92621,-28.2291c3.16174,-5.52124 9.51352,-8.30545 19.00816,-8.30545c16.32777,0 25.29388,4.98327 26.87946,14.94982c0,0.55685 0,110.97218 0,118.71135c0,9.41914 -6.09696,25.72803 -11.62763,27.38912c-14.93094,4.98327 -25.18063,5.27585 -30.7113,0.83054c-2.77477,0 -5.80438,-0.83054 -9.136,-2.49163c-2.77477,-7.73917 -8.85285,-17.96998 -18.26256,-30.7113c-12.74132,-10.50451 -29.34279,-19.6405 -49.8044,-27.39855c-20.48993,-7.73917 -37.92194,-11.6182 -52.30548,-11.6182c-18.272,0 -32.92924,14.10983 -44.00002,42.33893c-15.50666,38.74305 -22.41529,88.82116 -20.7542,150.26263c1.10425,27.12486 1.9348,44.28317 2.50108,51.4655c2.7559,22.69843 8.85286,42.06523 18.26256,58.10985c6.64436,11.08023 16.87516,20.21623 30.72073,27.39855c13.82669,7.2012 27.38912,11.07079 40.67785,11.6182c65.8679,2.77477 104.31838,-26.28487 115.40805,-87.1695c6.08752,-32.6461 6.63492,-60.04465 1.66109,-82.18624c-1.12312,-4.42643 -0.57572,-10.38181 1.66109,-17.85672c2.18962,-7.46547 11.8919,-12.03346 29.05021,-13.69455c3.86959,0 8.56971,1.80265 14.11927,5.39854c5.49293,3.6242 8.27714,7.35222 8.27714,11.2218z" fill="#ffffff" fill-rule="nonzero" stroke="#ffffff" stroke-width="50"/><path d="M704.34898,472.78336c0.53796,23.24583 -0.55684,48.43589 -3.32218,75.54187c-4.4453,47.60535 -16.88461,82.18624 -37.3651,103.77098c-9.41914,9.96654 -31.82499,21.31103 -67.23642,34.03348c-15.50666,4.98327 -32.66497,7.47491 -51.47493,7.47491c-29.88076,0 -56.73191,-5.53067 -80.52514,-16.61091c-26.0206,-12.1656 -42.06523,-27.93653 -48.15275,-47.32221c-2.2085,-2.76534 -4.70957,-6.63493 -7.46547,-11.6182c-2.78422,-16.60147 -7.20121,-41.49895 -13.28872,-74.71132v-82.18623c0,-7.74861 1.93479,-24.35008 5.81382,-49.81385c3.86015,-25.44489 6.36122,-39.55472 7.47491,-42.3295c19.36681,-51.47494 40.67784,-79.69459 63.91423,-84.6873c10.50451,-2.19905 22.13215,-3.32218 34.86403,-3.32218c40.95155,0 78.04295,9.96654 111.24588,29.8902c2.19906,1.11368 4.97384,1.66109 8.29602,1.66109c0.55684,-1.66109 1.10424,-8.56972 1.67052,-20.7542c0.54741,0 0.54741,-9.67397 0,-29.05021c-0.56628,-13.28872 0.7456,-22.68899 3.92621,-28.2291c3.16174,-5.52124 9.51352,-8.30545 19.00816,-8.30545c16.32777,0 25.29388,4.98327 26.87946,14.94982c0,0.55685 0,21.03734 0,61.43204c0,30.44704 0,49.54014 0,57.27931c0,9.41914 0,13.57187 0,12.44874c-2.22737,8.30545 -6.09696,13.27929 -11.62763,14.94038c-14.93094,4.98327 -25.18063,5.27585 -30.7113,0.83054c-2.77477,0 -5.80438,-0.83054 -9.136,-2.49163c-2.77477,-7.73917 -8.85285,-17.96998 -18.26256,-30.7113c-12.74132,-10.50451 -29.34279,-19.6405 -49.8044,-27.39855c-20.48993,-7.73917 -37.92194,-11.6182 -52.30548,-11.6182c-18.272,0 -32.92924,14.10983 -44.00002,42.33893c-15.50666,38.74305 -22.41529,88.82116 -20.7542,150.26263c1.10425,27.12486 1.9348,44.28317 2.50108,51.4655c2.7559,22.69843 8.85286,42.06523 18.26256,58.10985c6.64436,11.08023 16.87516,20.21623 30.72073,27.39855c13.82669,7.2012 27.38912,11.07079 40.67785,11.6182c65.8679,2.77477 104.31838,-26.28487 115.40805,-87.1695c6.08752,-32.6461 6.63492,-60.04465 1.66109,-82.18624c-1.12312,-4.42643 -0.57572,-10.38181 1.66109,-17.85672c2.18962,-7.46547 11.8919,-12.03346 29.05021,-13.69455c3.86959,0 8.56971,1.80265 14.11927,5.39854c5.49293,3.6242 8.27714,7.35222 8.27714,11.2218z" fill="#ffffff" fill-rule="nonzero" stroke="#4c4c4c" stroke-width="25"/><path d="M704.34898,472.78336c0.53797,23.24583 -0.55684,48.43589 -3.32218,75.54187c-4.4453,47.60535 -16.88461,82.18623 -37.3651,103.77097c-9.41914,9.96654 -31.82499,21.31104 -67.23642,34.03348c-15.50666,4.98327 -32.66497,7.47491 -51.47493,7.47491c-29.88075,0 -56.73191,-5.53068 -80.52514,-16.61091c-26.02061,-12.1656 -42.06523,-27.93652 -48.15275,-47.32221c-2.2085,-2.76534 -4.70957,-6.63492 -7.46547,-11.6182c-2.78421,-16.60147 -7.20121,-41.49895 -13.28872,-74.71132v-82.18623c0,-7.74861 1.93479,-24.35008 5.81382,-49.81384c3.86015,-25.44489 6.36122,-39.55472 7.47491,-42.3295c19.36681,-51.47493 40.67784,-79.6946 63.91424,-84.68731c10.50451,-2.19906 22.13214,-3.32218 34.86403,-3.32218c40.95155,0 78.04294,9.96654 111.24588,29.89019c2.19906,1.11369 4.97383,1.66109 8.29601,1.66109c0.55684,-1.66109 1.10425,-8.56972 1.67053,-20.75419c0.5474,0 0.5474,-9.67397 0,-29.05021c-0.56628,-13.28872 0.7456,-22.68899 3.92621,-28.2291c3.16173,-5.52124 9.51352,-8.30545 19.00816,-8.30545c16.32777,0 25.29388,4.98327 26.87947,14.94982c0,0.55684 0,21.03733 0,61.43204c0,30.44704 0,49.54014 0,57.27931c0,9.41914 0,13.57187 0,12.44874c-2.22737,8.30545 -6.09696,13.27929 -11.62763,14.94038c-14.93094,4.98327 -25.18062,5.27585 -30.7113,0.83055c-2.77478,0 -5.80438,-0.83055 -9.136,-2.49164c-2.77478,-7.73917 -8.85286,-17.96998 -18.26256,-30.7113c-12.74132,-10.50451 -29.34279,-19.64051 -49.8044,-27.39856c-20.48993,-7.73917 -37.92194,-11.6182 -52.30548,-11.6182c-18.272,0 -32.92923,14.10983 -44.00002,42.33893c-15.50666,38.74305 -22.41529,88.82116 -20.75419,150.26263c1.10425,27.12485 1.93479,44.28317 2.50107,51.46549c2.7559,22.69843 8.85286,42.06523 18.26256,58.10986c6.64436,11.08023 16.87517,20.21623 30.72074,27.39856c13.82669,7.20121 27.38912,11.07079 40.67784,11.6182c65.86791,2.77478 104.31838,-26.28487 115.40804,-87.1695c6.08752,-32.64609 6.63492,-60.04465 1.66109,-82.18623c-1.12312,-4.42643 -0.57572,-10.38182 1.66109,-17.85672c2.18962,-7.46547 11.8919,-12.03347 29.05021,-13.69456c3.86959,0 8.56972,1.80266 14.11927,5.39854c5.49292,3.6242 8.27714,7.35221 8.27714,11.2218z" fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1"/></g></g></svg><!--rotationCenter:448:480-->
+        <div class="title">TurboWarp Extension Gallery</div>
+      </h1>
+
+      <p class="setumei1">This is the official extension gallery, where you can get extensions that aren't limited by the extension sandbox. All of the extensions here are reviewed for safety.</p>
+      <p class="setumei2">You can also find these extensions in TurboWarp's "Add Extension" menu.</p>
+
+      <div class="infobox infobox-warning">
+        <div class="infobox-title info1">These extensions are not compatible with Scratch.</div>
+        <span class="info2">Projects that use these extensions can't be opened in Scratch or uploaded to the Scratch website.
+        They can still be used in </span><a href="https://packager.turbowarp.org/" class="info3">the TurboWarp packager</a><span class="info4">.</span>
+      </div>
+
+    
+
+    <script>
+      document.addEventListener('click', function (e) {
+        var toCopy = e.target.getAttribute('data-copy');
+        if (toCopy) {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(toCopy);
+          } else {
+            var input = document.createElement('input');
+            input.value = toCopy;
+            input.style.top = '0';
+            input.style.left = '0';
+            input.style.position = 'fixed';
+            document.body.appendChild(input);
+            input.focus();
+            input.select();
+            try {
+              document.execCommand('copy');
+            } catch (e) {
+              console.error(e);
+            }
+            document.body.removeChild(input);
+            e.target.focus();
+          }
+        }
+
+        if (e.target.className.includes('sample-list-button')) {
+          var extension = e.target.closest('.extension');
+          extension.dataset.samplesOpen = extension.dataset.samplesOpen !== 'true';
+        }
+      });
+    </script>
+
+    <div class="section extensions-outer">
+      <div class="extensions">
+        
+        
+          <div class="extension">
+            <div class="extension-banner">
+              
+              <img loading="lazy" src="images/CCcat/browser.svg" class="extension-image">
+
+              <div class="extension-buttons">
+                <button class="copy" data-copy="https://extensions-chauchau.vercel.app/CCcat/browser.js">Copy URL</button>
+                <a class="open" href="https://scratch-mod.vercel.app/editor?extension=https://extensions-chauchau.vercel.app/CCcat/browser.js">Open Extension</a>
+
+                
+
+                
+              </div>
+            </div>
+
+            
+      
+            <h2 class="br">Browser Utilities</h2>
+            <p>
+              <span class="br2">Utilities for creating web apps
+              Created by </span><a href="" class="br3">chauchaucat</a>
+              <span class="br4">.</span>
+              
+            </p>
+          </div>
+    </div>
+
+    <footer class="section">
+      <p class="footer">TurboWarp is not affiliated with Scratch, the Scratch Team, or the Scratch Foundation.</p>
+      <div class="links">
+        <a class="footer2" href="https://github.com/TurboWarp/extensions">GitHub</a>
+        -
+        <a class="footer3" href="https://docs.turbowarp.org/development/extensions/introduction">Developer Documentation</a>
+      </div>
+    </footer>
+    <script src="index.js">
+    </script>
+  </body>
+</html>
