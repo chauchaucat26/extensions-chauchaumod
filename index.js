@@ -1,5 +1,5 @@
 function printKeyValuePairs(jsonData) {
-    const jaData = jsonData.ja;
+    const jaData = jsonData.getBrowserLanguage();
     for (const key in jaData) {
       if (jaData.hasOwnProperty(key)) {
         const value = jaData[key];
