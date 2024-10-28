@@ -22,7 +22,7 @@ function printKeyValuePairs(jsonData) {
         "info2": "これらの拡張機能を使用するプロジェクトは、Scratch で開くことも、Scratch にアップロードすることもできません。かわりに、これらは",
         "info3": "TurboWarpのパッケージャー",
         "info4": "で引き続き使用できます。",
-        "footer": "ChauchauModは、TurboWarp、Scratch、Scratchチームおよび、Scratch財団(ざいだん)と提携(れんけい)していません。",
+        "footer": "ChauchauModは、TurboWarp、Scratch、Scratchチームおよび、Scratch財団と提携していません。",
         "footer2": "リポジトリ",
         "footer3": "開発者向けドキュメント",
         "copy": "URLをコピー",
