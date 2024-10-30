@@ -1,7 +1,7 @@
 {
     "extensions": [
         {
-            "slug": "CCcat/browser",
+            "slug": "code/CCcat/browser",
             "id": "browser",
             "name": "Browser Utilities",
             "description": "Utilities for creating web apps Created by chauchaucat .",
@@ -22,7 +22,7 @@
             ]
         },
         {
-            "slug": "CCcat/txt",
+            "slug": "code/CCcat/txt",
             "id": "txt",
             "name": "Text Utilities",
             "description": "Utilitie block useful when handling text.",
