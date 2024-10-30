@@ -20,6 +20,27 @@
                     "link": null
                 }
             ]
+        },
+        {
+            "slug": "CCcat/txt",
+            "id": "txt",
+            "name": "Text Utilities",
+            "description": "Utilitie block useful when handling text.",
+            "nameTranslations": {
+                "ja": "テキスト",
+                "ja-hira": "テキスト"
+            },
+            "descriptionTranslations": {
+                "ja": "文章を扱うためのユーティリティ",
+                "ja-hira": "文章を扱うためのユーティリティ"
+            },
+            "image": "images/CCcat/txt.svg",
+            "by": [
+                {
+                    "name": "chauchaucat",
+                    "link": null
+                }
+            ]
         }
     ]
 }
