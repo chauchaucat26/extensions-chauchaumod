@@ -17,7 +17,7 @@
             "by": [
                 {
                     "name": "chauchaucat",
-                    "link": null
+                    "link": "https://scratch.mit.edu/users/chauchaucat/"
                 }
             ]
         },
@@ -38,7 +38,28 @@
             "by": [
                 {
                     "name": "chauchaucat",
-                    "link": null
+                    "link": "https://scratch.mit.edu/users/chauchaucat/"
+                }
+            ]
+        },
+        {
+            "slug": "code/CCcat/device",
+            "id": "txt",
+            "name": "Device Utilities",
+            "description": "This is a device-based extension.",
+            "nameTranslations": {
+                "ja": "デバイス",
+                "ja-hira": "デバイス"
+            },
+            "descriptionTranslations": {
+                "ja": "デバイス関係ののユーティリティ",
+                "ja-hira": "デバイス関係ののユーティリティ"
+            },
+            "image": "images/CCcat/txt.svg",
+            "by": [
+                {
+                    "name": "chauchaucat",
+                    "link": "https://scratch.mit.edu/users/chauchaucat/"
                 }
             ]
         }
