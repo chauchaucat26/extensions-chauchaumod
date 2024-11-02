@@ -1,4 +1,4 @@
-Scratch.translate.setup({"ja":{"_Device":"デバイス","_getT":"[ip]の[thing]","_ip":"現在のIPアドレス","_country":"国","_country_name":"国名","_version":"バージョン","_city":"都市","_battery":"バッテリーの[thing]","_level":"残量","_dischargingTime":"残量残り時間","_chargingTime":"充電残り時間","_charging":"充電している"}});/* end generated l10n code */(function (Scratch) {
+Scratch.translate.setup({"ja":{"_Device":"デバイス","_getT":"[ip]の[thing]","_ip":"現在のIPアドレス","_country":"国","_country_name":"国名","_version":"バージョン","_city":"都市","_battery":"バッテリーの[thing]","_level":"残量","_dischargingTime":"残量残り時間","_chargingTime":"充電残り時間","_charging":"充電している","_DorL":"[DL]モード","_dark":"ダーク","_light":"ライト"}});/* end generated l10n code */(function (Scratch) {
     "use strict";
 
     class Device {
@@ -46,6 +46,18 @@ Scratch.translate.setup({"ja":{"_Device":"デバイス","_getT":"[ip]の[thing]"
               blockType: Scratch.BlockType.BOOLEAN,
               text: Scratch.translate("charging"),
             },
+            {
+              opcode: "DorL",
+              blockType: Scratch.BlockType.BOOLEAN,
+              text: Scratch.translate("DorL"),
+              disableMonitor: true,
+              arguments: {
+                DL: {
+                  type: Scratch.ArgumentType.STRING,
+                  menu: "DL",
+                },
+              },
+            },
           ],
           menus: {
                 gT: {
@@ -86,6 +98,19 @@ Scratch.translate.setup({"ja":{"_Device":"デバイス","_getT":"[ip]の[thing]"
                       },
                     ],
                 },
+                DL: {
+                  acceptReporters: false,
+                  items: [
+                    {
+                      text: Scratch.translate("dark"),
+                      value: "dark",
+                    },
+                    {
+                      text: Scratch.translate("light"),
+                      value: "light",
+                    },
+                  ],
+                }
           },
         };
       }
@@ -126,7 +151,9 @@ Scratch.translate.setup({"ja":{"_Device":"デバイス","_getT":"[ip]の[thing]"
             return null;
         });
       } 
-        
+      DorL(args){
+        return window.matchMedia('(prefers-color-scheme: ' + args["DL"] + ')').matches
+      }
     }
   
     Scratch.extensions.register(new Device());
